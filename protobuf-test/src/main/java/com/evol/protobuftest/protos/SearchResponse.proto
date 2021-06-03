@@ -1,0 +1,36 @@
+syntax = "proto3";
+option java_package = "com.evol.protobuftest.domain";
+option java_outer_classname = "SearchResponse";
+
+message Result {
+  string url = 1;
+  string title = 2;
+  repeated string snippets = 3;
+}
+
+message MessageSearchResponse {
+  int32 code = 1;
+  string msg = 2;
+  int32 sub_code = 3;
+  string sub_msg = 4;
+  double temp = 5;
+  string username = 6;
+  string nick = 7;
+  enum Corpus {
+      option allow_alias = true;
+      UNIVERSAL = 0;
+      WEB = 1;
+      IMAGES = 2;
+      LOCAL = 3;
+      NEWS = 4;
+      PRODUCTS = 5;
+      VIDEO = 6;
+      MOIVE = 6;
+
+    }
+
+
+  Corpus corpus = 8;
+  repeated Result results = 9;
+}
+
