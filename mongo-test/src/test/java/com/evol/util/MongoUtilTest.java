@@ -21,6 +21,7 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -106,12 +107,14 @@ public class MongoUtilTest {
         Date minDate1 = this.convertDateToMin(date);
         Date maxDate1 = this.convertDateToMax(date);
 
-        //转时区加8小时
-        LocalDateTime minDate =  minDate1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(8L);
-        LocalDateTime maxDate =  maxDate1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(8L);
+//        //转时区加8小时
+//        LocalDateTime minDate =  minDate1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(8L);
+//        LocalDateTime maxDate =  maxDate1.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusHours(8L);
 
-        log.info("minDate:" + minDate + " , maxDate:" + maxDate);
-        Criteria criteria = Criteria.where("createTime").gte(minDate).lt(maxDate);
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
+
+        log.info("minDate:" + minDate1 + " , maxDate:" + maxDate1);
+        Criteria criteria = Criteria.where("createTime").gte(minDate1).lt(maxDate1);
         query.addCriteria(criteria);
         query.limit(5);
         query.with(Sort.by(Sort.Order.desc("errOrderRate"), Sort.Order.desc("errOrderNumber")));
