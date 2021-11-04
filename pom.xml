@@ -6,7 +6,11 @@
 
     <groupId>com.evol</groupId>
     <artifactId>spring-tech</artifactId>
+    <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
+    <modules>
+        <module>netty-server-test</module>
+    </modules>
 
     <properties>
         <evol.version>0.1-SNAPSHOT</evol.version>
