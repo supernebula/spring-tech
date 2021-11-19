@@ -5,6 +5,8 @@ import com.evol.util.ExcelUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -15,6 +17,8 @@ import java.util.Map;
  */
 public class InstructServerHandler extends ChannelInboundHandlerAdapter { // (1)
 
+    private static Logger logger = Logger.getLogger(InstructServerHandler.class);
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         TDVDto dto = (TDVDto) msg;
@@ -23,8 +27,10 @@ public class InstructServerHandler extends ChannelInboundHandlerAdapter { // (1)
         Map<String, String> deviceInfoMap = ExcelUtil.getTieTaDeviceInfo();
         String deviceNo = deviceInfoMap.get(dto.getImei());
 
-        ctx.writeAndFlush(Unpooled.copiedBuffer("TDV#" + (deviceNo == null ? "none": deviceNo) ,
-                StandardCharsets.UTF_8));
+        String downInstruct = "TDV#" + (deviceNo == null ? "none": deviceNo);
+
+        ctx.writeAndFlush(Unpooled.copiedBuffer(downInstruct, StandardCharsets.UTF_8));
+        logger.debug("设备请求：" + StringUtils.trim(dto.getInstructStr()) + "，服务返回：" + downInstruct);
         //ctx.close();
 
 //        ctx.write(msg); // (1)
