@@ -10,6 +10,7 @@
     <version>0.1-SNAPSHOT</version>
     <modules>
         <module>netty-server-test</module>
+        <module>clickhouse-test</module>
     </modules>
 
     <properties>
